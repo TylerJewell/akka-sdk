@@ -1,0 +1,3892 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Component and service calls :: Akka Documentation</title>
+    <link rel="canonical" href="https://tylerjewell.github.io/akka-sdk/sdk/component-and-service-calls.html">
+    <link rel="prev" href="integrations/index.html">
+    <link rel="next" href="integrations/ai-and-models.html">
+    <meta name="generator" content="Antora 3.1.9">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&family=Roboto+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../_/css/site.css">
+	<meta property="og:site_name" content="Akka Documentation" />
+	<meta name="author" content="Akka Documentation">
+	<meta itemprop="image" content="https://content.akka.io/hubfs/website/social-share-images/akka-1200-628.jpg">
+	<meta name="twitter:image:src" content="https://content.akka.io/hubfs/website/social-share-images/akka-1200-628.jpg">
+	<meta property="og:image" content="https://content.akka.io/hubfs/website/social-share-images/akka-1200-628.jpg" />
+	<meta property="og:image:secure_url" content="https://content.akka.io/hubfs/website/social-share-images/akka-1200-628.jpg" />
+	<meta property="og:title" content="Component and service calls | Akka SDK" />
+	<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Component and service calls","isPartOf":{"@type":"SoftwareApplication","name":"Akka SDK","applicationCategory":"DeveloperApplication"},"publisher":{"@type":"Organization","name":"Akka","url":"https://akka.io"},"about":"Akka SDK documentation","sameAs":"https://doc.akka.io/libraries/"}</script>	<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="28b912e7-09e9-43d5-91e4-3d1897044004-test" ></script>
+<!-- Google Tag Manager | Google Analytics is handled by GTM -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KBJGH35');</script>
+<!-- End Google Tag Manager --><link rel="icon" href="../_/img/favicon/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" sizes="180x180" href="../_/img/favicon/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="../_/img/favicon/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="../_/img/favicon/favicon-16x16.png" />
+<link rel="manifest" href="../_/img/favicon/site.webmanifest" />    <link rel="stylesheet" href="../_/css/tabs.css">
+  </head>
+  <body class="bg-white text-akka-black dark:bg-black dark:text-white article">
+  <chatlio-widget widgetid="b611b988-9e2b-4e36-566e-01a6d042121c"></chatlio-widget>
+<header id="nav-header" class="header fixed border-b border-b-akka-black dark:border-b-akka-gray-dark z-40 top-0 block standard-page-padding-x px-0 py-0  h-[calc(var(--navbarHeight)+1px)] mx-auto w-full bg-black">
+  <div class="w-full max-w-screen-2xl mx-auto h-full flex gap-3 lg:gap-12 justify-between text-white px-4">
+
+    
+    <a class="flex-none w-36 inline-flex" href="https://www.akka.io/">
+      <img class="w-32" src="../_/img/akka-logo-white.svg">
+    </a> 
+
+    <div id="topbar-nav" class="overflow-auto sm:overflow-visible topbar-nav flex-grow hidden fixed h-screen sm:h-full left-0 sm:left-auto p-4 sm:p-0 top-[84px] sm:top-auto bg-black w-full sm:w-auto sm:static sm:flex items-center justify-end gap-6 hide-for-print">
+      
+      <div id="search-field" class="field flex justify-end lg:max-w-sm 2xl:max-w-sm relative sm:static">
+        <input id="search-input" class="w-full sm:w-auto !px-4 !py-2 bg-akka-gray-800 border border-akka-gray-700 cursor-pointer" type="text"
+          placeholder="Search Akka Docs" >
+      </div>
+      <nav class="flex flex-col sm:flex-row gap-2 font-space-grotesk text-xs font-normal h-full">
+        <span class="akka-doc-switch" role="note">You're reading the <b>SDK</b> docs&nbsp;&middot; <a href="https://doc.akka.io/libraries/akka-dependencies/current/overview.html" target="new">Switch to Libraries</a></span>
+<style>
+  .akka-doc-switch{font-size:.82rem;line-height:1.4;color:rgba(255,255,255,.62);white-space:nowrap;align-self:center}
+  .akka-doc-switch b{color:#fff;font-weight:600}
+  .akka-doc-switch a{color:rgba(255,255,255,.62);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.22);padding-bottom:1px;transition:color .15s,border-color .15s}
+  .akka-doc-switch a:hover{color:#fff;border-bottom-color:#fff}
+  @media (max-width:1024px){.akka-doc-switch{display:none}}
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var bar = document.querySelector('.akka-doc-switch');
+    var top = document.querySelector('#topbar-nav');
+    if (bar && top && bar.parentNode !== top) { top.insertBefore(bar, top.firstChild); }
+  });
+</script>
+        <div class="w-full h-[1px] sm:w-[0] lg:w-[1px] sm:h-full inline-block bg-akka-gray-dark">&nbsp;</div>
+        <a data-context="Mega Menu - Top Level" class="sm:hidden lg:inline-block !m-0 hover:text-akka-blue-dkr dark:hover:text-akka-blue" href="https://www.akka.io/contact">Contact Us</a>
+        <a data-context="Mega Menu - Top Level" class="sm:hidden lg:inline-block !m-0 hover:text-akka-blue-dkr dark:hover:text-akka-blue" href="https://console.akka.io/login">Sign In</a>
+        <span class="button-drop-down">
+    <a href="https://akka.io/get-started" class="button sm:!m-0 !hidden lg:!inline-block cursor-default" data-context="SDK Docs - Main Nav Button" target="_blank">Get Started</a>
+</span>
+        <div class="sm:hidden">&nbsp;</div>
+
+      </nav>
+    </div>
+
+    <button class="navbar-burger sm:hidden" data-target="topbar-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    
+  </div>
+</header>
+<div class="body standard-page-padding-x z-10 max-w-screen-2xl mx-auto relative">
+    <div class="relative flex gap-4 flex-row justify-center">
+        <div class="nav-container pl-0 fixed left-0 z-20 top-40 lg:static flex-none w-full sm:w-[50%] lg:w-72" data-component="" data-version="">
+  <aside class="nav pl-8 lg:pl-0 pt-4 lg:pt-9 lg:fixed w-full lg:w-72 overflow-y-scroll overscroll-none sm:border-r border-t border-akka-gray-300 lg:border-none top-[--navbar-height]">
+    <div id="navPanel" class="panels flex flex-col mr-1">
+<div class="nav-panel-menu overflow-y-scroll overscroll-none h-[--nav-panel-menu-height] is-active" data-panel="menu">
+  <nav class="nav-menu relative min-h-full leading-[1.35] prose-sm">
+    <button class="nav-menu-toggle w-5 h-5 invisible absolute right-4 border-none outline-none" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="font-bold font-space-grotesk title m-0 mr-6"><a href="../index.html">Akka</a></h3>
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="0">
+    
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="1">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../about-akka.html">About Akka</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../what-is-akka.html">What is Akka?</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../akka-agents.html">Agents</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../akka-orchestration.html">Orchestration</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../akka-memory.html">Memory</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../akka-streaming.html">Streaming</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../akka-automated-operations.html">Automated Operations</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../akka-internals.html">Akka Internals</a>
+
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="0">
+    
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="1">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/index.html">Getting Started</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/set-up-dev-env.html">Set up your dev env</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/spec-your-first-agent.html">Spec-first hello agent</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/author-your-first-service.html">Code-first hello agent</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/planner-agent/index.html">Multi-agent tutorial</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/planner-agent/activity.html">Activity agent</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/planner-agent/preferences.html">User preferences</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/planner-agent/weather.html">Weather agent</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/planner-agent/team.html">Orchestrate the agents</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/planner-agent/dynamic-team.html">Dynamic orchestration</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/planner-agent/eval.html">Evaluating task results</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/ask-akka-agent/index.html">RAG chat tutorial</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/ask-akka-agent/the-agent.html">Creating the agent</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/ask-akka-agent/indexer.html">Knowledge indexing with a workflow</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/ask-akka-agent/rag.html">Executing RAG queries</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/ask-akka-agent/endpoints.html">Adding UI endpoints</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/shopping-cart/index.html">Shopping cart tutorial</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/shopping-cart/build-and-deploy-shopping-cart.html">A simple shopping cart service</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/shopping-cart/addview.html">Authenticated user-specific lookup</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../getting-started/samples.html">Samples and blueprints</a>
+
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="0">
+    
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="1">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../concepts/index.html">Understanding</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../concepts/concepts.html">Concepts</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <span class="nav-text leading-5">Foundations</span>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../concepts/distributed-systems.html">Distributed systems</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../concepts/architecture-model.html">Architecture model</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../concepts/deployment-model.html">Deployment model</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <span class="nav-text leading-5">State and execution</span>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../concepts/state-model.html">State model</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../concepts/declarative-effects.html">Declarative effects</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../concepts/multi-region.html">Multi-region operations</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <span class="nav-text leading-5">Agentic concepts</span>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../concepts/ai-agents.html">AI agents</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../concepts/ai-orchestration-patterns.html">AI orchestration patterns</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../resources.html">Resources</a>
+
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="0">
+    
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="1">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="index.html">Developing</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <span class="nav-text leading-5">Building with AI</span>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="spec-driven-development.html">Spec-driven development</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="enforced-mode.html">Enforced mode</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="a-la-carte-mode.html">À la carte mode</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="ai-coding-assistant.html">Using an AI coding assistant</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="components/index.html">Components</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="agents.html">Agents</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="agents/prompt.html">Prompts</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="agents/calling.html">Agent invocation</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="agents/memory.html">Session memory</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="agents/structured.html">Structured responses</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="agents/failures.html">Failure handling</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="agents/extending.html">Function tools</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="agents/streaming.html">Streaming responses</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="agents/orchestrating.html">Multi-agent orchestration</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="agents/guardrails.html">Guardrails</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="agents/llm_eval.html">LLM evaluation</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="agents/testing.html">Testing</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="autonomous-agents.html">Autonomous Agents</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="autonomous-agents/defining.html">Agent definition</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="autonomous-agents/tasks.html">Tasks</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="autonomous-agents/coordination.html">Coordination patterns</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="autonomous-agents/capabilities.html">Coordination capabilities</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="autonomous-agents/client.html">Client API</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="autonomous-agents/notifications.html">Notifications</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="autonomous-agents/testing.html">Testing</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="event-sourced-entities.html">Event Sourced Entities</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="key-value-entities.html">Key Value Entities</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="http-endpoints.html">HTTP Endpoints</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="grpc-endpoints.html">gRPC Endpoints</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="mcp-endpoints.html">MCP Endpoints</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="views.html">Views</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="workflows.html">Workflows</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="timed-actions.html">Timers</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="consuming-producing.html">Consumers</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="integrations/index.html">Integrations</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item is-current-page" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="component-and-service-calls.html">Component and service calls</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="integrations/ai-and-models.html">AI &amp; models</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="integrations/data-and-knowledge.html">Data &amp; knowledge</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="integrations/object-storage.html">Object storage</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="integrations/messaging-and-events.html">Messaging &amp; events</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="integrations/apis-and-protocols.html">APIs &amp; protocols</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="integrations/identity-and-security.html">Identity &amp; security</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="integrations/observability.html">Observability</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="streaming.html">Streaming</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="setup-and-configuration/index.html">Configuration</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="setup-and-dependency-injection.html">Setup and dependency injection</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="serialization.html">Serialization</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="errors-and-failures.html">Errors and failures</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="access-control.html">Access Control Lists (ACLs)</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="auth-with-jwts.html">JSON Web Tokens (JWT)</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="model-provider-details.html">AI model provider configuration</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="sanitization.html">Data sanitization</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="metric.html">Metrics</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="running-locally.html">Run a service locally</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="running-with-broker.html">Run locally with a broker</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="local-cluster.html">Run a local cluster</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="dev-best-practices.html">Design considerations</a>
+
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="0">
+    
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="1">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/index.html">Operating</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/configuring.html">Self-managed operations</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/akka-platform.html">Akka Automated Operations</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/organizations/index.html">Organizations</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/organizations/manage-users.html">Manage users</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/organizations/regions.html">Regions</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/projects/index.html">Projects</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/projects/create-project.html">Create</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/projects/manage-project-access.html">Manage users</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/projects/container-registries.html">Configure a container registry</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/projects/external-container-registries.html">Configure an external container registry</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/projects/message-brokers.html">Configure message brokers</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/projects/broker-google-pubsub.html">Google Pub/Sub</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/projects/broker-confluent.html">Confluent Cloud</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/projects/broker-aws-msk.html">AWS MSK Kafka</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/projects/broker-aiven.html">Aiven for Kafka</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/projects/broker-kafka.html">Self-hosted Kafka</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/projects/broker-azure-eventhubs.html">Azure Event Hubs</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/projects/secrets.html">Manage secrets</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/projects/external-secrets.html">Manage external secrets</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/services/index.html">Services</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/services/deploy-service.html">Deploy and manage services</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/services/service-config.html">Service configuration overrides</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/services/invoke-service.html">Invoking Akka services</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/services/view-data.html">Viewing data</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/services/data-management.html">Data migration</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/services/custom-truststore.html">Configuring a custom JVM truststore</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/services/workload-identity.html">Workload Identity</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/regions/index.html">Regions</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/regions/setup.html">Multi-region setup</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/regions/infrastructure.html">Multi-region infrastructure</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/tls-certificates.html">TLS certificates</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/observability-and-monitoring/index.html">Observability and monitoring</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/observability-and-monitoring/view-logs.html">View logs</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/observability-and-monitoring/metrics.html">View metrics</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/observability-and-monitoring/traces.html">View traces</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/observability-and-monitoring/observability-exports.html">Exporting metrics, logs, and traces</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/observability-and-monitoring/alerting-baselines.html">Alerting baselines</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/integrating-cicd/index.html">Integrating with CI/CD tools</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/integrating-cicd/github-actions.html">CI/CD with GitHub Actions</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/cli/index.html">CLI</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/cli/installation.html">Install the Akka CLI</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/cli/using-cli.html">Using the Akka CLI</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/cli/command-completion.html">Enable CLI command completion</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/cli/system-config.html">System Configuration</a>
+
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../operations/operator-best-practices.html">Operator best practices</a>
+
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="0">
+    
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="1">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/index.html">Reference</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/glossary.html">Glossary of terms</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/api-docs.html">API documentation</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/descriptors/index.html">Descriptors</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/descriptors/project-descriptor.html">Project descriptor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/descriptors/service-descriptor.html">Service descriptor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/descriptors/route-descriptor.html">Route descriptor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/descriptors/external-secret-descriptor.html">External secret descriptor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/descriptors/observability-descriptor.html">Observability descriptor</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/config/reference.html">Service configuration</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/index.html">CLI commands</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka.html">akka</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth.html">akka auth</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth_container-registry.html">akka auth container-registry</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth_container-registry_clear-cached-token.html">akka auth container-registry clear-cached-token</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth_container-registry_configure.html">akka auth container-registry configure</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth_container-registry_credentials.html">akka auth container-registry credentials</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth_container-registry_install-helper.html">akka auth container-registry install-helper</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth_current-login.html">akka auth current-login</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth_login.html">akka auth login</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth_logout.html">akka auth logout</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth_signup.html">akka auth signup</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth_tokens_create.html">akka auth tokens create</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth_tokens_list.html">akka auth tokens list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth_tokens_revoke.html">akka auth tokens revoke</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth_tokens.html">akka auth tokens</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth_use-token.html">akka auth use-token</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_auth.html">akka auth</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_code_check.html">akka code check</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_code_context-update.html">akka code context-update</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_code_init.html">akka code init</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_code_token.html">akka code token</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_code.html">akka code</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_completion.html">akka completion</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_config_clear-cache.html">akka config clear-cache</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_config_clear.html">akka config clear</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_config_current-context.html">akka config current-context</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_config_delete-context.html">akka config delete-context</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_config_get-organization.html">akka config get-organization</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_config_get-project.html">akka config get-project</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_config_get.html">akka config get</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_config_list-contexts.html">akka config list-contexts</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_config_list.html">akka config list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_config_rename-context.html">akka config rename-context</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_config_set.html">akka config set</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_config_use-context.html">akka config use-context</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_config.html">akka config</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_container-registry_delete-image.html">akka container-registry delete-image</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_container-registry_list-images.html">akka container-registry list-images</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_container-registry_list-tags.html">akka container-registry list-tags</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_container-registry_list.html">akka container-registry list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_container-registry_print.html">akka container-registry print</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_container-registry_push.html">akka container-registry push</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_container-registry.html">akka container-registry</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_docker_add-credentials.html">akka docker add-credentials</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_docker_list-credentials.html">akka docker list-credentials</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_docker_remove-credentials.html">akka docker remove-credentials</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_docker.html">akka docker</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_docs.html">akka docs</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_cluster.html">akka local cluster</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_console.html">akka local console</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_remote_add.html">akka local remote add</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_remote_list.html">akka local remote list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_remote_remove.html">akka local remote remove</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_remote.html">akka local remote</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_components_get-state.html">akka local services components get-state</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_components_workflows_get.html">akka local services components workflows get</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_components_list-events.html">akka local services components list-events</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_components_list-ids.html">akka local services components list-ids</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_components_list-interactions.html">akka local services components list-interactions</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_components_list-timers.html">akka local services components list-timers</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_components_list.html">akka local services components list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_components.html">akka local services components</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_connectivity.html">akka local services connectivity</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_list.html">akka local services list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_views_describe.html">akka local services views describe</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_views_drop.html">akka local services views drop</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_views_get-state.html">akka local services views get-state</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_views_list.html">akka local services views list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_views_query.html">akka local services views query</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services_views.html">akka local services views</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_services.html">akka local services</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_start.html">akka local start</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_status.html">akka local status</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local_stop.html">akka local stop</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_local.html">akka local</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_logs.html">akka logs</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_mcp_serve.html">akka mcp serve</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_mcp.html">akka mcp</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_auth_add_openid.html">akka organizations auth add openid</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_auth_add.html">akka organizations auth add</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_auth_list.html">akka organizations auth list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_auth_remove.html">akka organizations auth remove</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_auth_show.html">akka organizations auth show</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_auth_test.html">akka organizations auth test</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_auth_update_openid.html">akka organizations auth update openid</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_auth_update.html">akka organizations auth update</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_auth.html">akka organizations auth</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_get.html">akka organizations get</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_invitations_cancel.html">akka organizations invitations cancel</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_invitations_create.html">akka organizations invitations create</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_invitations_list.html">akka organizations invitations list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_invitations.html">akka organizations invitations</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_list.html">akka organizations list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_users_add-binding.html">akka organizations users add-binding</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_users_delete-binding.html">akka organizations users delete-binding</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_users_list-bindings.html">akka organizations users list-bindings</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations_users.html">akka organizations users</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_organizations.html">akka organizations</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_apply.html">akka projects apply</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_config_get_broker.html">akka projects config get broker</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_config_get.html">akka projects config get</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_config_set_broker.html">akka projects config set broker</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_config_set.html">akka projects config set</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_config_unset_broker.html">akka projects config unset broker</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_config_unset.html">akka projects config unset</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_config.html">akka projects config</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_delete.html">akka projects delete</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_export.html">akka projects export</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_get.html">akka projects get</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_hostnames_add.html">akka projects hostnames add</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_hostnames_list.html">akka projects hostnames list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_hostnames_remove.html">akka projects hostnames remove</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_hostnames_update.html">akka projects hostnames update</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_hostnames.html">akka projects hostnames</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_list.html">akka projects list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_new.html">akka projects new</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_default_azure-monitor.html">akka projects observability add default azure-monitor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_default_google-cloud.html">akka projects observability add default google-cloud</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_default_otlp-http.html">akka projects observability add default otlp-http</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_default_otlp.html">akka projects observability add default otlp</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_default_splunk-hec.html">akka projects observability add default splunk-hec</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_default.html">akka projects observability add default</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_logs_azure-monitor.html">akka projects observability add logs azure-monitor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_logs_google-cloud.html">akka projects observability add logs google-cloud</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_logs_otlp-http.html">akka projects observability add logs otlp-http</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_logs_otlp.html">akka projects observability add logs otlp</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_logs_splunk-hec.html">akka projects observability add logs splunk-hec</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_logs.html">akka projects observability add logs</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_metrics_azure-monitor.html">akka projects observability add metrics azure-monitor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_metrics_google-cloud.html">akka projects observability add metrics google-cloud</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_metrics_otlp-http.html">akka projects observability add metrics otlp-http</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_metrics_otlp.html">akka projects observability add metrics otlp</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_metrics_prometheus.html">akka projects observability add metrics prometheus</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_metrics_splunk-hec.html">akka projects observability add metrics splunk-hec</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_metrics.html">akka projects observability add metrics</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_traces_azure-monitor.html">akka projects observability add traces azure-monitor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_traces_google-cloud.html">akka projects observability add traces google-cloud</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_traces_otlp-http.html">akka projects observability add traces otlp-http</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_traces_otlp.html">akka projects observability add traces otlp</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add_traces.html">akka projects observability add traces</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_add.html">akka projects observability add</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_apply.html">akka projects observability apply</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_config_traces.html">akka projects observability config traces</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_config.html">akka projects observability config</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_edit.html">akka projects observability edit</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_export.html">akka projects observability export</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_get.html">akka projects observability get</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_default_azure-monitor.html">akka projects observability remove default azure-monitor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_default_google-cloud.html">akka projects observability remove default google-cloud</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_default_otlp-http.html">akka projects observability remove default otlp-http</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_default_otlp.html">akka projects observability remove default otlp</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_default_splunk-hec.html">akka projects observability remove default splunk-hec</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_default.html">akka projects observability remove default</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_logs_azure-monitor.html">akka projects observability remove logs azure-monitor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_logs_google-cloud.html">akka projects observability remove logs google-cloud</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_logs_otlp-http.html">akka projects observability remove logs otlp-http</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_logs_otlp.html">akka projects observability remove logs otlp</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_logs_splunk-hec.html">akka projects observability remove logs splunk-hec</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_logs.html">akka projects observability remove logs</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_metrics_azure-monitor.html">akka projects observability remove metrics azure-monitor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_metrics_google-cloud.html">akka projects observability remove metrics google-cloud</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_metrics_otlp-http.html">akka projects observability remove metrics otlp-http</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_metrics_otlp.html">akka projects observability remove metrics otlp</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_metrics_prometheus.html">akka projects observability remove metrics prometheus</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_metrics_splunk-hec.html">akka projects observability remove metrics splunk-hec</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_metrics.html">akka projects observability remove metrics</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_traces_azure-monitor.html">akka projects observability remove traces azure-monitor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_traces_google-cloud.html">akka projects observability remove traces google-cloud</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_traces_otlp-http.html">akka projects observability remove traces otlp-http</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_traces_otlp.html">akka projects observability remove traces otlp</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove_traces.html">akka projects observability remove traces</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_remove.html">akka projects observability remove</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_default_akka-console.html">akka projects observability set default akka-console</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_default_azure-monitor.html">akka projects observability set default azure-monitor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_default_google-cloud.html">akka projects observability set default google-cloud</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_default_otlp-http.html">akka projects observability set default otlp-http</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_default_otlp.html">akka projects observability set default otlp</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_default_splunk-hec.html">akka projects observability set default splunk-hec</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_default.html">akka projects observability set default</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_logs_azure-monitor.html">akka projects observability set logs azure-monitor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_logs_google-cloud.html">akka projects observability set logs google-cloud</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_logs_otlp-http.html">akka projects observability set logs otlp-http</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_logs_otlp.html">akka projects observability set logs otlp</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_logs_splunk-hec.html">akka projects observability set logs splunk-hec</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_logs.html">akka projects observability set logs</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_metrics_azure-monitor.html">akka projects observability set metrics azure-monitor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_metrics_google-cloud.html">akka projects observability set metrics google-cloud</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_metrics_otlp-http.html">akka projects observability set metrics otlp-http</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_metrics_otlp.html">akka projects observability set metrics otlp</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_metrics_prometheus.html">akka projects observability set metrics prometheus</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_metrics_splunk-hec.html">akka projects observability set metrics splunk-hec</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_metrics.html">akka projects observability set metrics</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_traces_azure-monitor.html">akka projects observability set traces azure-monitor</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_traces_google-cloud.html">akka projects observability set traces google-cloud</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_traces_otlp-http.html">akka projects observability set traces otlp-http</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_traces_otlp.html">akka projects observability set traces otlp</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set_traces.html">akka projects observability set traces</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_set.html">akka projects observability set</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_unset_default.html">akka projects observability unset default</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_unset_logs.html">akka projects observability unset logs</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_unset_metrics.html">akka projects observability unset metrics</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_unset_traces.html">akka projects observability unset traces</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability_unset.html">akka projects observability unset</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_observability.html">akka projects observability</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_open.html">akka projects open</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_regions_add.html">akka projects regions add</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_regions_list.html">akka projects regions list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_regions_remove.html">akka projects regions remove</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_regions_set-primary.html">akka projects regions set-primary</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_regions.html">akka projects regions</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_settings_bring-up-region.html">akka projects settings bring-up-region</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_settings_down-region.html">akka projects settings down-region</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_settings.html">akka projects settings</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_tokens_create.html">akka projects tokens create</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_tokens_list.html">akka projects tokens list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_tokens_revoke.html">akka projects tokens revoke</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_tokens.html">akka projects tokens</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects_update.html">akka projects update</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_projects.html">akka projects</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_regions_list.html">akka regions list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_regions.html">akka regions</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_roles_add-binding.html">akka roles add-binding</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_roles_delete-binding.html">akka roles delete-binding</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_roles_invitations_delete.html">akka roles invitations delete</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_roles_invitations_invite-user.html">akka roles invitations invite-user</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_roles_invitations_list.html">akka roles invitations list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_roles_invitations.html">akka roles invitations</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_roles_list-bindings.html">akka roles list-bindings</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_roles_list.html">akka roles list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_roles.html">akka roles</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_routes_create.html">akka routes create</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_routes_delete.html">akka routes delete</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_routes_edit.html">akka routes edit</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_routes_export.html">akka routes export</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_routes_get.html">akka routes get</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_routes_list.html">akka routes list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_routes_update.html">akka routes update</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_routes.html">akka routes</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_create_asymmetric.html">akka secrets create asymmetric</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_create_generic.html">akka secrets create generic</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_create_symmetric.html">akka secrets create symmetric</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_create_tls-ca.html">akka secrets create tls-ca</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_create_tls.html">akka secrets create tls</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_create.html">akka secrets create</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_delete.html">akka secrets delete</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_external_create_aws.html">akka secrets external create aws</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_external_create_azure.html">akka secrets external create azure</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_external_create_gcp.html">akka secrets external create gcp</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_external_create.html">akka secrets external create</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_external_delete.html">akka secrets external delete</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_external_get.html">akka secrets external get</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_external_info.html">akka secrets external info</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_external_list.html">akka secrets external list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_external_update_aws.html">akka secrets external update aws</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_external_update_azure.html">akka secrets external update azure</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_external_update_gcp.html">akka secrets external update gcp</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_external_update.html">akka secrets external update</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_external.html">akka secrets external</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_get.html">akka secrets get</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets_list.html">akka secrets list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_secrets.html">akka secrets</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_service-configs_create.html">akka service-configs create</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_service-configs_delete.html">akka service-configs delete</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_service-configs_get.html">akka service-configs get</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_service-configs_list.html">akka service-configs list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_service-configs.html">akka service-configs</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_apply.html">akka services apply</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_components_get-state.html">akka services components get-state</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_components_workflows_get.html">akka services components workflows get</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_components_list-events.html">akka services components list-events</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_components_list-ids.html">akka services components list-ids</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_components_list-interactions.html">akka services components list-interactions</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_components_list-timers.html">akka services components list-timers</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_components_list.html">akka services components list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_components.html">akka services components</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_connectivity.html">akka services connectivity</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_data_cancel-task.html">akka services data cancel-task</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_data_export.html">akka services data export</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_data_get-task.html">akka services data get-task</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_data_import.html">akka services data import</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_data_list-tasks.html">akka services data list-tasks</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_data_watch-task.html">akka services data watch-task</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_data.html">akka services data</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_delete.html">akka services delete</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_deploy.html">akka services deploy</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_edit.html">akka services edit</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_export.html">akka services export</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_expose.html">akka services expose</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_get.html">akka services get</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_jwts_add.html">akka services jwts add</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_jwts_generate.html">akka services jwts generate</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_jwts_list-algorithms.html">akka services jwts list-algorithms</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_jwts_list.html">akka services jwts list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_jwts_remove.html">akka services jwts remove</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_jwts_update.html">akka services jwts update</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_jwts.html">akka services jwts</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_list.html">akka services list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_logging_list.html">akka services logging list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_logging_set-level.html">akka services logging set-level</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_logging_unset-level.html">akka services logging unset-level</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_logging.html">akka services logging</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_pause.html">akka services pause</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_proxy.html">akka services proxy</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_remove-config.html">akka services remove-config</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_restart.html">akka services restart</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_restore.html">akka services restore</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_resume.html">akka services resume</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_set-config.html">akka services set-config</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_unexpose.html">akka services unexpose</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_views_describe.html">akka services views describe</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_views_drop.html">akka services views drop</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_views_get-state.html">akka services views get-state</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_views_list.html">akka services views list</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_views_query.html">akka services views query</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services_views.html">akka services views</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_services.html">akka services</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_specify_init.html">akka specify init</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_specify.html">akka specify</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka_version.html">akka version</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/cli/akka-cli/akka.html">akka</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/index.html">Specify</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <span class="nav-text leading-5">Commands</span>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/analyze.html">/akka:analyze</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/build.html">/akka:build</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/checklist.html">/akka:checklist</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/clarify.html">/akka:clarify</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/constitution.html">/akka:constitution</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/converge.html">/akka:converge</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/deploy.html">/akka:deploy</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/docs.html">/akka:docs</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/implement.html">/akka:implement</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/inspect.html">/akka:inspect</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/issues.html">/akka:issues</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/mode.html">/akka:mode</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/plan.html">/akka:plan</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/reliability.html">/akka:reliability</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/review.html">/akka:review</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/setup.html">/akka:setup</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/ship.html">/akka:ship</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/specify.html">/akka:specify</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/status.html">/akka:status</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/tasks.html">/akka:tasks</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <span class="nav-text leading-5">Exit conditions</span>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/exit-condition-schema.html">Exit condition schema</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/default-library.html">Default exit-condition library</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/catalog/index.html">Exit condition catalog</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/catalog/functional.html">Functional</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/catalog/data-integrity.html">Data Integrity</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/catalog/reliability.html">Reliability</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/catalog/performance.html">Performance</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/catalog/security-compliance.html">Security &amp; Compliance</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/catalog/operability.html">Operability</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/catalog/experience.html">Experience</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/catalog/documentation.html">Documentation &amp; Training</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/catalog/repository-hygiene.html">Repository Hygiene</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/catalog/pipeline-scanning.html">Pipeline &amp; Scanning</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/catalog/code-test-health.html">Code &amp; Test Health</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/catalog/environment-dependencies.html">Environment &amp; Dependencies</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/catalog/process-integrity.html">Process Integrity</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/catalog/build-efficiency.html">Build Efficiency</a>
+
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/specify/policies.html">Policies</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/index.html">Views</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/index.html">View query syntax</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/query.html">Query</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/select.html">SELECT</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/from.html">FROM</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/where.html">WHERE</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/as.html">AS</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/limit.html">LIMIT</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/offset.html">OFFSET</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/order-by.html">ORDER BY</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/group-by.html">GROUP BY</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/join.html">JOIN</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/operators/index.html">Operators</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/operators/comparison.html">Comparison operators</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/operators/logical.html">Logical operators</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/operators/in.html">IN</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/operators/any.html">= ANY</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/operators/like.html">LIKE</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/operators/is-null.html">IS NULL/IS NOT NULL</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/functions/index.html">Functions</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/functions/collect.html">collect()</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/functions/count.html">count()</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/functions/distinct.html">DISTINCT</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/functions/text-search.html">text_search()</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/functions/total-count.html">total_count()</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/functions/has-more.html">has_more()</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/functions/next-page-token.html">next_page_token()</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="5">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/syntax/functions/page-token-offset.html">page_token_offset()</a>
+
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/concepts/index.html">View concepts</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/concepts/table-updaters.html">Table updaters</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/concepts/data-types.html">Data types</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/concepts/result-mapping.html">Result mapping</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/concepts/optional-fields.html">Optional fields</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/concepts/array-types.html">Array types</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/concepts/pagination.html">Pagination</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="4">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/views/concepts/advanced-views.html">Advanced views</a>
+
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <button class="nav-item-toggle border-none outline-none">
+    </button>
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/telemetry/index.html">Telemetry</a>
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/telemetry/metrics.html">Metrics reference</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/telemetry/deprecated-metrics.html">(Deprecated) Prometheus metrics reference</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="3">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/telemetry/tracing.html">Tracing reference</a>
+
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/jwts.html">JSON Web Tokens (JWTs)</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/security/oidc-setup.html">OpenID connect</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/migration-guide.html">Migration guide</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/release-notes.html">Release notes</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/security-announcements/index.html">Security announcements</a>
+
+  </li>
+  <li class="mt-2 nav-item" data-depth="2">
+    
+    <a data-context="Docs - Navigation - Sidebar" class="nav-link leading-5" href="../reference/support.html">Support resources</a>
+
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="mt-2 nav-item" data-depth="0">
+    
+
+<ul class="nav-list p-0 m-0 ml-2 font-light font-sans dark:text-akka-gray-300">
+  <li class="mt-2 nav-item" data-depth="1">
+    
+    <span class="nav-text leading-5"><a href="https://doc.akka.io/libraries/akka-dependencies/current/overview.html" target="new">Akka Libraries</a></span>
+
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="hidden nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Akka</span>
+    <span class="version">default</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Akka</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+        <main class="article flex-auto grow z-10 min-w-0">
+<div class="toolbar sticky top-[84px] min-w-0 bg-white dark:bg-black h-20 z-20 flex items-center" role="navigation">
+<button class="nav-toggle h-20 w-20"></button>
+<nav class="flex z-10" aria-label="breadcrumbs">
+  <ul class="flex gap-2 gap-y-0 font-light px-8 text-akka-gray-600 dark:text-akka-gray-300 text-sm md:text-base flex-wrap">
+    <li class="after:content-['/'] after:pl-2 after:last:content-['']"><a class="hover:text-akka-blue-dkr dark:hover:text-akka-blue" href="../index.html">Akka</a></li>
+    <li class="after:content-['/'] after:pl-2 after:last:content-['']"><a data-context="Docs - Breadcrumbs" class="hover:text-akka-blue-dkr dark:hover:text-akka-blue" href="index.html">Developing</a></li>
+    <li class="after:content-['/'] after:pl-2 after:last:content-['']"><a data-context="Docs - Breadcrumbs" class="hover:text-akka-blue-dkr dark:hover:text-akka-blue" href="integrations/index.html">Integrations</a></li>
+    <li class="after:content-['/'] after:pl-2 after:last:content-['']"><a data-context="Docs - Breadcrumbs" class="hover:text-akka-blue-dkr dark:hover:text-akka-blue" href="component-and-service-calls.html">Component and service calls</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content min-w-0 grid grid-cols-12 gap-4 pt-0">
+<article class="doc prose-akka z-10 px-8 col-span-full xl:col-span-9 pt-28 mb-8 min-h-[calc(100vh)] max-w-[840px]">
+        <h1 class="page">Component and service calls</h1>
+    <fieldset class="supergroup-switch">
+	
+
+
+
+
+	
+
+
+    
+    
+    
+</fieldset>
+    <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>An Akka service comprises many components. These components might depend on one another, on other Akka services, or even external services. This section describes how to call other components and services from within an Akka service.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_calling_akka_components"><a class="anchor" href="#_calling_akka_components"></a>Calling Akka components</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Since Akka is an auto-scaling solution, components run distributed across many nodes within the same service. That is why calls between Akka components are done via a client rather than through regular method calls. The receiving component instance may be on the same node, but it may also be on a different node.</p>
+</div>
+<div class="paragraph">
+<p>Requests and responses are always serialized to JSON during transmission between the client and the component.</p>
+</div>
+<div class="sect2">
+<h3 id="_component_client"><a class="anchor" href="#_component_client"></a>Component Client</h3>
+<div class="paragraph">
+<p>The <code>akka.javasdk.client.ComponentClient</code> is a utility for making type-safe calls between components within an Akka service. To use the <code>ComponentClient</code>, you need to inject it into your component via the constructor:</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="https://github.com/akka/akka-sdk/blob/main/samples/event-sourced-counter-brokers/src/main/java/counter/api/CounterEndpoint.java">CounterEndpoint.java</a></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Acl(allow = @Acl.Matcher(principal = Acl.Principal.INTERNET))
+@HttpEndpoint("/counter")
+public class CounterEndpoint {
+
+  private final ComponentClient componentClient;
+
+  public CounterEndpoint(ComponentClient componentClient) { <i class="conum" data-value="1"></i><b>(1)</b>
+    this.componentClient = componentClient;
+  }
+
+  @Get("/{counterId}")
+  public Integer get(String counterId) {
+    return componentClient
+      .forEventSourcedEntity(counterId) <i class="conum" data-value="2"></i><b>(2)</b>
+      .method(CounterEntity::get)
+      .invoke(); <i class="conum" data-value="3"></i><b>(3)</b>
+  }
+
+  @Post("/{counterId}/increase/{value}")
+  public HttpResponse increase(String counterId, Integer value) {
+    componentClient
+      .forEventSourcedEntity(counterId)
+      .method(CounterEntity::increase)
+      .invoke(value);
+
+    return ok(); <i class="conum" data-value="4"></i><b>(4)</b>
+  }
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Accept the <code>ComponentClient</code> as a constructor argument and keep it in a field.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Use a specific request builder for the component you want to call.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Invoking the method returns the <code>T</code> that the component eventually returns.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Adapt the response rather than returning it as is. In this case, you discard the response value and respond OK without a response body.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The component client can call command handlers on Event Sourced Entities, Key Value Entities, Workflows, Timed Actions, and query methods on Views.</p>
+</div>
+<div class="paragraph">
+<p>The component client is available for injection only in Service Setup, Agents, Endpoints, Consumers, Timed Actions, and Workflows. For more information, see <a href="setup-and-dependency-injection.html#_dependency_injection" class="xref page">dependency injection</a>.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">NOTE</dt>
+<dd>
+<p>For component client error handling, see <a href="errors-and-failures.html" class="xref page">Errors and failures</a> section.</p>
+</dd>
+</dl>
+</div>
+<div class="sect3">
+<h4 id="_asynchronous_execution"><a class="anchor" href="#_asynchronous_execution"></a><strong>Asynchronous execution</strong></h4>
+<div class="paragraph">
+<p>For the vast majority of your Akka programming tasks, writing clean and simple synchronous code is all you need.</p>
+</div>
+<div class="paragraph">
+<p>One way to think about your synchronous code is that it returns already completed futures. For example, you could rewrite the first "hello world" sample to return a Java future, e.g. <code>CompletionStage&lt;String&gt;</code> as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Get("/hello")
+public CompletionStage&lt;String&gt; hello() {
+    return CompletableFuture.completedFuture("Hello world");
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Obviously, just writing simple synchronous code is easier to read and maintain. If you need to make a component client call that is explicitly asynchronous, you can use the component client&#8217;s <code>invokeAsync()</code> method, which returns a <code>CompletionStage&lt;T&gt;</code>. This allows you to trigger multiple calls concurrently, enabling parallel processing.</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="https://github.com/akka/akka-sdk/blob/main/samples/event-sourced-counter-brokers/src/main/java/counter/api/CounterEndpoint.java">CounterEndpoint.java</a></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public record IncreaseAllThese(List&lt;String&gt; counterIds, Integer value) {}
+
+@Post("/increase-multiple")
+public HttpResponse increaseMultiple(IncreaseAllThese increaseAllThese) throws Exception {
+  var triggeredTasks = increaseAllThese
+    .counterIds()
+    .stream()
+    .map(
+      counterId -&gt;
+        componentClient
+          .forEventSourcedEntity(counterId)
+          .method(CounterEntity::increase)
+          .invokeAsync(increaseAllThese.value)
+    ) <i class="conum" data-value="1"></i><b>(1)</b>
+    .toList();
+
+  for (var task : triggeredTasks) {
+    task.toCompletableFuture().get(); <i class="conum" data-value="2"></i><b>(2)</b>
+  }
+  return ok(); <i class="conum" data-value="3"></i><b>(3)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Call <code>invokeAsync()</code> and collect each <code>CompletionStage&lt;T&gt;</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>When all tasks have been started, wait for all tasks to complete.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>When all tasks have successfully completed, we can respond.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_synchronous_vs_asynchronous_component_invocation"><a class="anchor" href="#_synchronous_vs_asynchronous_component_invocation"></a><strong>Synchronous vs asynchronous component invocation</strong></h4>
+<div class="paragraph">
+<p>You decide how the <a href="../reference/glossary.html#component_client" class="xref page">component client</a> invokes the component, and the Akka runtime handles the request in the background. The following table summarizes the key differences between synchronous and asynchronous component invocation.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch compact">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">Synchronous</th>
+<th class="tableblock halign-left valign-top">Asynchronous</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When the component method returns</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">After the method finishes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Immediately</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client behavior</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Waits for the result before continuing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Continues immediately, must handle the result later</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Return type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whatever the component method returns directly</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A <code>CompletionStage&lt;T&gt;</code> representing the result at a later time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Component execution</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Always runs in the background</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Always runs in the background</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Common use case</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Calling a method and using the result in the next line of code</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Starting multiple async tasks or implementing background, always-on processes (Ambient AI)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ideal for</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simple flows where the result is needed immediately</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parallel task execution, deferred response handling, or long-running background logic</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_when_in_doubt_write_synchronous_code"><a class="anchor" href="#_when_in_doubt_write_synchronous_code"></a><strong>When in doubt, write synchronous code</strong></h4>
+<div class="paragraph">
+<p>Trust that Akka will do the right thing and that the runtime makes the necessary optimizations.</p>
+</div>
+<div class="paragraph">
+<p>If you do need explicit control over futures, such as creating streams from asynchronous sources or explicitly performing parallel work, then the component client&#8217;s <code>invokeAsync()</code> and the full power of Java concurrency is there for you when you need it.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_calling_akka_services"><a class="anchor" href="#_calling_akka_services"></a>Calling Akka services</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Calling other Akka services within the same project is done by invoking them using an HTTP or a gRPC client, depending on what type
+of endpoints the service provides.</p>
+</div>
+<div class="sect2">
+<h3 id="_calling_akka_services_over_http"><a class="anchor" href="#_calling_akka_services_over_http"></a>Calling Akka services over HTTP</h3>
+<div class="paragraph">
+<p>The service is identified by the name it has been deployed with. Akka takes care of routing requests to the service and keeping the data safe by encrypting the connection and handling authentication for you.</p>
+</div>
+<div class="paragraph">
+<p>In the following snippet, we have an endpoint component that calls another service named <code>counter</code>. It makes use of SDK-provided <code>akka.javasdk.http.HttpClientProvider</code> which returns HTTP client instances for calling other Akka services.</p>
+</div>
+<div class="paragraph">
+<p>In our delegating service implementation:</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="https://github.com/akka/akka-sdk/blob/main/samples/doc-snippets/src/main/java/com/example/callanotherservice/DelegatingServiceEndpoint.java">DelegatingServiceEndpoint.java</a></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Acl(allow = @Acl.Matcher(service = "*"))
+@HttpEndpoint
+public class DelegatingServiceEndpoint {
+
+  private final HttpClient httpClient;
+
+  public DelegatingServiceEndpoint(HttpClientProvider httpClient) { <i class="conum" data-value="1"></i><b>(1)</b>
+    this.httpClient = httpClient.httpClientFor("counter"); <i class="conum" data-value="2"></i><b>(2)</b>
+  }
+
+  // model for the JSON we accept
+  record IncreaseRequest(int increaseBy) {}
+
+  // model for the JSON the upstream service responds with
+  record Counter(int value) {}
+
+  @Post("/delegate/counter/{counterId}/increase")
+  public String addAndReturn(String counterId, IncreaseRequest request) {
+    var response = httpClient
+      .POST("/counter/" + counterId + "/increase") <i class="conum" data-value="3"></i><b>(3)</b>
+      .withRequestBody(request)
+      .responseBodyAs(Counter.class)
+      .invoke(); <i class="conum" data-value="4"></i><b>(4)</b>
+
+    if (response.status().isSuccess()) { <i class="conum" data-value="5"></i><b>(5)</b>
+      return "New counter vaue: " + response.body().value;
+    } else {
+      throw new RuntimeException("Counter returned unexpected status: " + response.status());
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Accept a <code>HttpClientProvider</code> parameter for the constructor.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Use it to look up a client for the <code>counter</code> service.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Use the <code>HttpClient</code> to prepare a REST call to the <code>counter</code> service endpoint.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Invoking the call will return a <code>StrictResponse&lt;T&gt;</code> with details about the result as well as the deserialized response body.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Handle the response, which may be successful or an error.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The HTTP client provider is only available for injection in the following types of components: HTTP Endpoints, gRPC Endpoints, Workflows, Consumers and Timed Actions.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_calling_external_http_services"><a class="anchor" href="#_calling_external_http_services"></a>Calling external HTTP services</h3>
+<div class="paragraph">
+<p>Calling external services deployed on <strong>different</strong> Akka projects or any other external HTTP server is also done with the <code>HttpClientProvider</code>. Instead of a service name, the protocol and full server name are used when calling <code>httpClientFor</code>. For example, <code><a href="https://example.com" class="bare">https://example.com</a></code> or <code><a href="http://example.com" class="bare">http://example.com</a></code>.</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="https://github.com/akka/akka-sdk/blob/main/samples/doc-snippets/src/main/java/com/example/callanotherservice/CallExternalServiceEndpoint.java">CallExternalServiceEndpoint.java</a></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package com.example.callanotherservice;
+
+import akka.javasdk.annotations.Acl;
+import akka.javasdk.annotations.http.Get;
+import akka.javasdk.annotations.http.HttpEndpoint;
+import akka.javasdk.http.HttpClient;
+import akka.javasdk.http.HttpClientProvider;
+import akka.javasdk.http.StrictResponse;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@HttpEndpoint
+@Acl(allow = @Acl.Matcher(principal = Acl.Principal.ALL))
+public class CallExternalServiceEndpoint {
+
+  private final HttpClient httpClient;
+
+  public record PeopleInSpace(List&lt;Astronaut&gt; people, int number, String message) {}
+
+  public record Astronaut(String craft, String name) {}
+
+  public record AstronautsResponse(List&lt;String&gt; astronautNames) {}
+
+  public CallExternalServiceEndpoint(HttpClientProvider httpClient) { <i class="conum" data-value="1"></i><b>(1)</b>
+    this.httpClient = httpClient.httpClientFor("http://api.open-notify.org"); <i class="conum" data-value="2"></i><b>(2)</b>
+  }
+
+  @Get("/iss-astronauts")
+  public AstronautsResponse issAstronauts() {
+    StrictResponse&lt;PeopleInSpace&gt; peopleInSpaceResponse = httpClient
+      .GET("/astros.json") <i class="conum" data-value="3"></i><b>(3)</b>
+      .responseBodyAs(PeopleInSpace.class) <i class="conum" data-value="4"></i><b>(4)</b>
+      .invoke();
+
+    var astronautNames = peopleInSpaceResponse
+      .body()
+      .people.stream() <i class="conum" data-value="5"></i><b>(5)</b>
+      .filter(astronaut -&gt; astronaut.craft.equals("ISS"))
+      .map(astronaut -&gt; astronaut.name)
+      .collect(Collectors.toList());
+    return new AstronautsResponse(astronautNames); <i class="conum" data-value="6"></i><b>(6)</b>
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Accept a <code>HttpClientProvider</code> parameter for the constructor.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Look up a <code>HttpClient</code> for a service using <code>http</code> protocol and server name.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Issue a GET call to the path <code>/astros.json</code> on the server.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Specify a class to parse the response body into.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Once the call completes, handle the response.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Return an adapted result object which will be turned into a JSON response.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_calling_akka_services_over_grpc"><a class="anchor" href="#_calling_akka_services_over_grpc"></a>Calling Akka services over gRPC</h3>
+<div class="paragraph">
+<p>The service is identified by the name it has been deployed with. Akka takes care of routing requests to the service and keeping the data safe by encrypting the connection and handling authentication for you.</p>
+</div>
+<div class="paragraph">
+<p>In this sample we will implement a gRPC endpoint that delegates a call to a <a href="grpc-endpoints.html" class="xref page">gRPC endpoint</a> of a customer registry service, deployed with the service name <code>customer-registry</code>.</p>
+</div>
+<div class="paragraph">
+<p>The SDK provides <code>akka.javasdk.grpc.GrpcClientProvider</code> which provides gRPC client instances for calling other services.</p>
+</div>
+<div class="paragraph">
+<p>To consume an external gRPC service, that service&#8217;s protobuf descriptor must be added to the <code>src/proto</code> directory of the project. This
+triggers generation of a client interface and Java classes for all the message types used as requests and responses for
+methods in that service.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Since the service protobuf descriptors need to be shared between the provider service and the consuming service, one simple option is to copy the service descriptions to each service that needs them. It is also possible to use a shared library with the protobuf descriptors.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In our delegating service implementation:</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="https://github.com/akka/akka-sdk/blob/main/samples/event-sourced-customer-registry-subscriber/src/main/java/customer/api/DelegateCustomerGrpcEndpointImpl.java">DelegateCustomerGrpcEndpointImpl.java</a></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@GrpcEndpoint
+public class DelegateCustomerGrpcEndpointImpl implements DelegateCustomerGrpcEndpoint {
+
+  private final Logger log = LoggerFactory.getLogger(getClass());
+
+  private CustomerGrpcEndpointClient customerService;
+
+  public DelegateCustomerGrpcEndpointImpl(GrpcClientProvider clientProvider) { <i class="conum" data-value="1"></i><b>(1)</b>
+    customerService = clientProvider.grpcClientFor(
+      CustomerGrpcEndpointClient.class,
+      "customer-registry"
+    ); <i class="conum" data-value="2"></i><b>(2)</b>
+  }
+
+  @Override
+  public CreateCustomerResponse createCustomer(CreateCustomerRequest in) {
+    log.info("Delegating customer creation to upstream gRPC service: {}", in);
+    if (in.getCustomerId().isEmpty()) throw new GrpcServiceException(
+      Status.INVALID_ARGUMENT.augmentDescription("No id specified")
+    );
+
+    try {
+      return customerService.createCustomer(in); <i class="conum" data-value="3"></i><b>(3)</b>
+    } catch (Exception ex) {
+      throw new RuntimeException("Delegate call to create upstream customer failed", ex);
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Accept a <code>GrpcClientProvider</code> parameter for the constructor.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Use the generated gRPC client interface for the service (<code>CustomerGrpcEndpointClient.class</code>) and the service name (<code>customer-registry</code>) to look up a client.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Use the client to call the other service and return a <code>CompletionStage&lt;CreateCustomerResponse&gt;</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Since the called service and the <code>DelegateCustomerGrpcEndpoint</code> share the same request and response protocol, no further transformation
+of the request or response is needed here.</p>
+</div>
+<div class="paragraph">
+<p>For dev mode and in tests, providing a config override in <code>application.conf</code> like for external calls is possible, however
+when deployed such configuration is ignored.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The gRPC client provider is only available for injection in the following types of components: HTTP Endpoints, gRPC endpoints, Workflows, Consumers and Timed Actions.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_calling_external_grpc_services"><a class="anchor" href="#_calling_external_grpc_services"></a>Calling external gRPC services</h3>
+<div class="paragraph">
+<p>Calling gRPC services deployed on <strong>different</strong> Akka projects or any other external gRPC server is also done with the <code>GrpcClientProvider</code>. Instead of a service name, the protocol and the fully qualified DNS name of the service are used when calling <code>grpcClientFor</code>. For example <code>hellogrpc.example.com</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="https://github.com/akka/akka-sdk/blob/main/samples/doc-snippets/src/main/java/com/example/callanotherservice/CallExternalGrpcEndpointImpl.java">CallExternalGrpcEndpointImpl.java</a></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@GrpcEndpoint
+@Acl(allow = @Acl.Matcher(principal = Acl.Principal.ALL))
+public class CallExternalGrpcEndpointImpl implements CallExternalGrpcEndpoint {
+
+  private final ExampleGrpcEndpointClient external;
+
+  public CallExternalGrpcEndpointImpl(GrpcClientProvider clientProvider) { <i class="conum" data-value="1"></i><b>(1)</b>
+    external = clientProvider.grpcClientFor(
+      ExampleGrpcEndpointClient.class,
+      "hellogrpc.example.com"
+    ); <i class="conum" data-value="2"></i><b>(2)</b>
+  }
+
+  @Override
+  public HelloReply callExternalService(HelloRequest in) {
+    return external.sayHello(in); <i class="conum" data-value="3"></i><b>(3)</b>
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Accept a <code>GrpcClientProvider</code> parameter for the constructor.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Use the generated gRPC client interface for the service (<code>ExampleGrpcEndpointClient.class</code>) and the service name (<code>doc-snippets</code>) to look up a client.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Use the client to call the other service and return a <code>CompletionStage&lt;HelloReply&gt;</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Since the called service and the <code>DelegatingGrpcEndpoint</code> share the same request and response protocol, no further transformation
+of the request or response is needed here.</p>
+</div>
+<div class="paragraph">
+<p>The service is expected to accept HTTPS connections and run on the standard HTTPS port (443). For calling a service on a nonstandard
+port, or served unencrypted (not recommended) it is possible to define configuration overrides in <code>application.conf</code> (or <code>application-test.conf</code>
+specifically for tests):</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="https://github.com/akka/akka-sdk/blob/main/samples/doc-snippets/src/main/resources/application.conf">application.conf</a></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">akka.javasdk.grpc.client."hellogrpc.example.com" {
+  # configure external call, to call back to self
+  host = "localhost"
+  port = 9000
+  use-tls = false
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mocking_http_and_grpc_services_in_tests"><a class="anchor" href="#_mocking_http_and_grpc_services_in_tests"></a>Mocking HTTP and gRPC services in tests</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When integration testing a service that calls other services, the testkit can intercept lookups
+via <code>HttpClientProvider.httpClientFor(&#8230;&#8203;)</code> and <code>GrpcClientProvider.grpcClientFor(&#8230;&#8203;)</code> and route
+them to a user-provided mock instead of making real network calls.</p>
+</div>
+<div class="paragraph">
+<p>The mock lookups are only populated when the runtime is started by the testkit; the default runner
+used in dev mode and production cannot see any mocks, so there is no risk of a mock leaking outside
+of tests.</p>
+</div>
+<div class="paragraph">
+<p>Mocks are registered either on <code>TestKit.Settings</code> (as defaults for all tests in the class) or on
+the live registries returned by <code>testKit.getMockedHttpServices()</code> and <code>testKit.getMockedGrpcServices()</code>
+(for per-test overrides). Calling <code>reset()</code> on a registry restores it to the defaults declared on
+the settings.</p>
+</div>
+<div class="sect2">
+<h3 id="_mocking_http_services"><a class="anchor" href="#_mocking_http_services"></a>Mocking HTTP services</h3>
+<div class="paragraph">
+<p>Given a service that looks up an HTTP client by service name:</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="https://github.com/akka/akka-sdk/blob/main/samples/doc-snippets/src/main/java/com/example/callanotherservice/DelegatingServiceEndpoint.java">DelegatingServiceEndpoint.java</a></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Acl(allow = @Acl.Matcher(service = "*"))
+@HttpEndpoint
+public class DelegatingServiceEndpoint {
+
+  private final HttpClient httpClient;
+
+  public DelegatingServiceEndpoint(HttpClientProvider httpClient) { <i class="conum" data-value="1"></i><b>(1)</b>
+    this.httpClient = httpClient.httpClientFor("counter"); <i class="conum" data-value="2"></i><b>(2)</b>
+  }
+
+  // model for the JSON we accept
+  record IncreaseRequest(int increaseBy) {}
+
+  // model for the JSON the upstream service responds with
+  record Counter(int value) {}
+
+  @Post("/delegate/counter/{counterId}/increase")
+  public String addAndReturn(String counterId, IncreaseRequest request) {
+    var response = httpClient
+      .POST("/counter/" + counterId + "/increase") <i class="conum" data-value="3"></i><b>(3)</b>
+      .withRequestBody(request)
+      .responseBodyAs(Counter.class)
+      .invoke(); <i class="conum" data-value="4"></i><b>(4)</b>
+
+    if (response.status().isSuccess()) { <i class="conum" data-value="5"></i><b>(5)</b>
+      return "New counter vaue: " + response.body().value;
+    } else {
+      throw new RuntimeException("Counter returned unexpected status: " + response.status());
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A test can declare the mocked response(s) either on <code>TestKit.Settings</code> (applied to every test in
+the class) or on <code>testKit.getMockedHttpServices()</code> inside an individual test:</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="https://github.com/akka/akka-sdk/blob/main/samples/doc-snippets/src/test/java/com/example/callanotherservice/DelegatingServiceEndpointMockedTest.java">DelegatingServiceEndpointMockedTest.java</a></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved include directive in modules/sdk/pages/component-and-service-calls.adoc - include::sdk:example$doc-snippets/src/test/java/com/example/callanotherservice/DelegatingServiceEndpointMockedTest.java[]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A class-wide default: every call <code>httpClientFor("counter")</code> receives this mocked response.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Reset between tests so per-test overrides do not leak.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>A per-test override: replace the mock for this test only; reverts on the next <code>reset()</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The mock handler is a plain <code>Function&lt;HttpRequest, HttpResponse&gt;</code>. The testkit runs it on the SDK
+dispatcher (virtual thread backed), so blocking inside the handler is safe.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mocking_grpc_services"><a class="anchor" href="#_mocking_grpc_services"></a>Mocking gRPC services</h3>
+<div class="paragraph">
+<p>For gRPC, the mock is an instance of the generated Akka gRPC client interface. The test implements
+the methods it expects to be called and lets the others throw:</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="https://github.com/akka/akka-sdk/blob/main/samples/doc-snippets/src/test/java/com/example/callanotherservice/CallExternalGrpcEndpointMockedTest.java">CallExternalGrpcEndpointMockedTest.java</a></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved include directive in modules/sdk/pages/component-and-service-calls.adoc - include::sdk:example$doc-snippets/src/test/java/com/example/callanotherservice/CallExternalGrpcEndpointMockedTest.java[]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Register the mock for the service name (or external host, as here) the service under test passes to <code>grpcClientFor</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Drive the local endpoint via <code>getGrpcEndpointClient</code>; when it internally looks up a gRPC client for <code>hellogrpc.example.com</code>, it receives the mock.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The mock extends the generated client interface, implements the methods the test exercises, and throws for the rest.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A class-wide default can also be declared via <code>TestKit.Settings.withMockedGrpcService(name, clientClass, mockInstance)</code>, paralleling the HTTP API.</p>
+</div>
+</div>
+</div>
+</div>
+    <footer class="border-t border-t-akka-gray-300 mt-12">
+        <nav class="pagination grid grid-cols-2 leading-none pt-4 pb-12 -mx-4">
+  <span class="prev relative ml-4 col-start-1 col-end-2 flex flex-col gap-1 font-sans font-medium text-akka-gray-600 dark:text-akka-gray-300 text-left text-xs before:content-['Previous']"><a data-context="Docs - Pagination - Previous" class="text-base text-akka-black dark:text-white before:-left-4 before:top-4 before:text-2xl before:absolute before:content-['\2039']" href="integrations/index.html">Integrations</a></span>
+  <span class="next relative mr-4 col-start-2 col-end-3 flex flex-col gap-1 font-sans font-medium text-akka-gray-600 dark:text-akka-gray-300 text-right text-xs before:content-['Next']"><a data-context="Docs - Pagination - Next" class="text-base text-akka-black dark:text-white after:-right-4 after:top-4 after:text-2xl after:absolute after:content-['\203a']" href="integrations/ai-and-models.html">AI &amp; models</a></span>
+</nav>
+    </footer>
+</article>
+<aside id="tocMenu" class="toc sidebar z-20 hidden xl:block xl:flex-none col-span-3 flex-none" data-title="On This Page" data-levels="3">
+  <div class="toc-menu font-sans font-light dark:text-akka-gray-300 prose-sm prose-li:m-0 prose-a:font-light"></div>
+</aside>
+  </div>
+</main>
+    </div>
+</div>
+
+<footer id="siteFooter" class="w-full flex flex-col items-center justify-center pb-6 bg-akka-black border-t-0 border-t-akka-black dark:border-t-akka-gray-700 text-white">
+	<div class="glowGradientWrapper mb-6">
+		<div class="glowGradient"></div>
+	</div>
+	<div class="max-w-screen-3xl standard-page-padding-x w-full flex flex-col gap-4 justify-between text-sm">
+		<div class="flex flex-wrap items-center divide-x-2 divide-white/70">
+			<a class="h-8 w-32 flex items-center pr-4" href="https://www.akka.io/">
+				<img src="../_/img/akka-logo-white.svg">
+			</a>
+		</div>
+		<div class="text-xs opacity-80">
+			<p>&copy; 2011 - <span id="dateInsert"></span>, Lightbend, Inc. All rights reserved. | <a href="https://www.lightbend.com/legal/licenses">Licenses</a> | <a href="https://www.lightbend.com/legal/terms">Terms</a> | <a href="https://www.lightbend.com/legal/privacy">Privacy Policy</a> | <a href="https://www.lightbend.com/legal/cookie">Cookie Listing</a> | <a id="ot-sdk-btn" class="ot-sdk-show-settings !text-xs !border-none !p-0 !m-0 !text-white hover:!bg-transparent">Cookie Settings</a> | <a rel="alternate" type="application/rss+xml" href="https://www.lightbend.com/blog/rss.xml" target="_blank">RSS</a></p>
+		</div>
+	</div>
+</footer>
+<!--insert copyright year -->
+<script>const d = new Date();let year = d.getFullYear();document.getElementById("dateInsert").innerHTML = year;</script><script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+    <script src="../_/js/tabs.js"></script>
+  </body>
+</html>

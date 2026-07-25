@@ -1,0 +1,34 @@
+{
+  "base-url": "https://doc.akka.io",
+  "baseUrl": "https://doc.akka.io",
+  "quickstarts": [
+    {
+      "id": "shopping-cart",
+      "language":  "java",
+      "title": "Shopping Cart",
+      "url": "/java/_attachments/shopping-cart-quickstart.zip",
+      "dir": "shopping-cart"
+    },
+    {
+      "id": "customer-registry",
+      "language":  "java",
+      "title": "Customer Registry",
+      "url": "/java/_attachments/customer-registry-quickstart.zip",
+      "dir": "customer-registry"
+    },
+    {
+      "id": "choreography-saga",
+      "language":  "java",
+      "title": "Choreography Saga",
+      "url": "/java/_attachments/choreography-saga-quickstart.zip",
+      "dir": "choreography-saga"
+    },
+    {
+      "id": "transfer-workflow",
+      "language":  "java",
+      "title": "Transfer Workflow",
+      "url": "/java/_attachments/workflow-quickstart.zip",
+      "dir": "transfer-workflow"
+    }
+  ]
+}
